@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Embed Accordion</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Roboto", sans-serif;
+        }
+
+        .accordion-container {
+            width: 100%;
+            padding: 20px;
+        }
+
+        .accordion {
+            background-color: #f1f1f1;
+            cursor: pointer;
+            padding: 1em;
+            margin: 1em;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            border: 2px solid #d5a53d;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+            box-shadow: 3px 3px 10px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .accordion img {
+            margin: 1em;
+            width: 16%;
+            height: auto;
+        }
+
+        .accordion:hover {
+            background-color: #ddd;
+        }
+
+        .accordion-inner {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: #f9f9f9;
+        }
+
+        .accordion-content.show {
+            max-height: 100vh;
+        }
+
+        .pdf-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pdf-container object {
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+
+        .volDate {
+            padding-left: 0.7em;
+            border-left: #2ea3f1 6px solid;
+        }
+
+        .styled-list {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 0.25em;
+        }
+          
+        .styled-list li {
+            font-size: 1.17em;
+            padding: 10px 0;
+            border-bottom: 1px solid #efefef;
+            padding-left: 0.35em;
+        }
+          
+        .styled-list li:last-child {
+            border-bottom: none;
+        }
+          
+        .styled-list li:hover {
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+          
+        .styled-list li::before {
+            content: '•';
+            color: #007BFF;
+            font-weight: bold;
+            display: inline-block;
+            width: 20px;
+        }
+        
+        .accordion-button-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .accordion-button {
+            border: none;
+            padding: 0px;
+            text-align: left;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+            position: relative;
+        }
+    
+        .arrow {
+            width: 5vw; /* 5% of the viewport width */
+            height: 5vw; /* Maintain aspect ratio with width */
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #007BFF; /* Adjust color as needed */
+            margin-right: 3em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="accordion-container">
+    <div class="accordion">
+        <div class="accordion-inner">
+            <img src="https://koreanflagship.manoa.hawaii.edu/wp-content/uploads/2023/12/2023-KLFC-newsletter-front.png" alt="Accordion Icon">
+            <div style="margin-left: 2em">
+                <h1>KOREAN FLAGSHIP TIMES</h1>
+                <div class="volDate">
+                    Volume 14
+                    <br>
+                    Issue 2023
+                </div>
+                <ul class="styled-list">
+                    <li onclick="">Director’s Message</li>
+                    <li onclick="">Student Spotlights</li>
+                    <li onclick="">Center News</li>
+                    <li onclick="">Tutor Reflection</li>
+                    <li onclick="">Student Testimonials</li>
+                    <li onclick="">Photo Gallery</li>
+                </ul>
+            </div>
+        </div>
+        <div class="accordion-button-container" onclick="toggleAccordion()">
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>       
+        </div>
+    </div>
+
+    <div class="accordion-content">
+        <div class="pdf-container">
+            <object id="pdfObject" data="https://koreanflagship.manoa.hawaii.edu/wp-content/uploads/2023/12/2023-KLFC-newsletter.pdf#page=1" type="application/pdf">
+                <p>Your browser does not support PDFs. 
+                   <a href="https://koreanflagship.manoa.hawaii.edu/wp-content/uploads/2023/12/2023-KLFC-newsletter.pdf">Download the PDF</a>.</p>
+            </object>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleAccordion() {
+        const content = document.querySelector('.accordion-content');
+        const arrow = document.querySelector('.arrow');
+        
+        if (content.classList.contains('show')) {
+            content.classList.remove('show');
+            arrow.style.transform = 'rotate(0deg)';
+        } else {
+            content.classList.add('show');
+            arrow.style.transform = 'rotate(180deg)';
+        }
+    }
+
+    function goToPage(pageNumber) {
+        // Get the <object> element (make sure it has an id of 'pdfObject' or adjust accordingly)
+        const pdfObject = document.getElementById('pdfObject');
+        
+        if (pdfObject) {
+            // Set the data attribute to the URL with a query parameter for the page number
+            pdfObject.data = `https://koreanflagship.manoa.hawaii.edu/wp-content/uploads/2023/12/2023-KLFC-newsletter.pdf#page=${pageNumber}`;
+        } else {
+            console.error('The <object> element with id "pdfObject" was not found.');
+        }
+    }
+    
+    
+</script>
+
+</body>
+</html>
