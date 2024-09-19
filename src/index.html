@@ -26,8 +26,7 @@
         .accordion {
             background-color: #f1f1f1;
             cursor: pointer;
-            padding: 1em;
-            margin: 1em;
+            padding: 2em 1em 2em 1em;
             display: flex;
             align-items: center;
             justify-content: space-around;
@@ -41,6 +40,8 @@
             margin: 1em;
             width: 16%;
             height: auto;
+            border: 2px solid black;
+            border-radius: 5px;
         }
 
         .accordion:hover {
@@ -50,6 +51,7 @@
         .accordion-inner {
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
             flex-grow: 1;
         }
 
@@ -77,40 +79,30 @@
         }
 
         .volDate {
+            margin: 1em 0 1em 0;
             padding-left: 0.7em;
             border-left: #2ea3f1 6px solid;
         }
 
         .styled-list {
-            list-style-type: none;
             padding: 0;
             margin-top: 0.25em;
         }
-          
+            
         .styled-list li {
             font-size: 1.17em;
-            padding: 10px 0;
-            border-bottom: 1px solid #efefef;
-            padding-left: 0.35em;
+            padding: 5px 0;
         }
-          
+            
         .styled-list li:last-child {
             border-bottom: none;
         }
-          
+            
         .styled-list li:hover {
             background-color: #f0f0f0;
             cursor: pointer;
         }
-          
-        .styled-list li::before {
-            content: '•';
-            color: #007BFF;
-            font-weight: bold;
-            display: inline-block;
-            width: 20px;
-        }
-        
+
         .accordion-button-container {
             display: flex;
             align-items: center;
@@ -126,7 +118,7 @@
             border-radius: 5px;
             position: relative;
         }
-    
+
         .arrow {
             width: 5vw; /* 5% of the viewport width */
             height: 5vw; /* Maintain aspect ratio with width */
@@ -143,7 +135,7 @@
         <div class="accordion-inner">
             <img src="https://koreanflagship.manoa.hawaii.edu/wp-content/uploads/2023/12/2023-KLFC-newsletter-front.png" alt="Accordion Icon">
             <div style="margin-left: 2em">
-                <h1>KOREAN FLAGSHIP TIMES</h1>
+                <h1 style="font-weight: 700;">KOREAN FLAGSHIP TIMES</h1>
                 <div class="volDate">
                     Volume 14
                     <br>
